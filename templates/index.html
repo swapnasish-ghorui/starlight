@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Legends Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header>
+        <h1>Legends of Ancient India</h1>
+        <p>Stories of bravery, wisdom, and heritage.</p>
+    </header>
+
+    <div class="container">
+        {% for post in posts %}
+            <article class="legend-card">
+                <h2>{{ post['title'] }}</h2>
+                <span class="date">Added on: {{ post['created'] }}</span>
+                <p>{{ post['content'] }}</p>
+                <a href="{{ url_for('post', post_id=post['id']) }}" class="read-more">Read Full Legend</a>
+            </article>
+        {% endfor %}
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Indian Legends Project | Built with Flask & SQLite</p>
+    </footer>
+
+</body>
+</html>
