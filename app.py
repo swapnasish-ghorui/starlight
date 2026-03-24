@@ -3,16 +3,6 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/<int:post_id>')
-def post(post_id):
-    conn = get_db_connection()
-    # Fetch only the one post that matches the ID from the URL
-    post = conn.execute('SELECT * FROM posts WHERE id = ?', (post_id,)).fetchone()
-    conn.close()
-    
-    # If the ID doesn't exist, Flask will show an error automatically
-    return render_template('post.html', post=post)
-
 # Function to connect to the database
 def get_db_connection():
     # This opens the file you created with init_db.py
@@ -22,6 +12,16 @@ def get_db_connection():
     # (like post['title']) instead of just numbers (like post[0]).
     conn.row_factory = sqlite3.Row 
     return conn
+
+@app.route('/<int:post_id>')
+def post(post_id):
+    conn = get_db_connection()
+    # Fetch only the one post that matches the ID from the URL
+    post = conn.execute('SELECT * FROM posts WHERE id = ?', (post_id,)).fetchone()
+    conn.close()
+    
+    # If the ID doesn't exist, Flask will show an error automatically
+    return render_template('post.html', post=post)
 
 @app.route('/')
 def index():
